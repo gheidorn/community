@@ -43,6 +43,7 @@ defmodule Community.Mixfile do
       {:cowboy, "~> 1.0"},
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.3.0"},
+      {:poison, "~> 3.1"},
       {:httpoison, "~> 1.1"}
     ]
   end
