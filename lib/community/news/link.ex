@@ -2,10 +2,9 @@ defmodule Community.News.Link do
   use Ecto.Schema
   import Ecto.Changeset
 
-
   schema "links" do
-    field :description, :string
-    field :url, :string
+    field(:description, :string)
+    field(:url, :string)
 
     timestamps()
   end

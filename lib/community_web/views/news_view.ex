@@ -1,3 +1,3 @@
 defmodule CommunityWeb.NewsView do
-    use CommunityWeb, :view
+  use CommunityWeb, :view
 end

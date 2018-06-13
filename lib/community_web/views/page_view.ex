@@ -1,3 +1,3 @@
 defmodule CommunityWeb.PageView do
-    use CommunityWeb, :view
+  use CommunityWeb, :view
 end

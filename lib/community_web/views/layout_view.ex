@@ -1,4 +1,3 @@
 defmodule CommunityWeb.LayoutView do
-    use CommunityWeb, :view
-  end
-  
+  use CommunityWeb, :view
+end

@@ -11,7 +11,7 @@ defmodule Community.Application do
       # Start the Ecto repository
       supervisor(Community.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(CommunityWeb.Endpoint, []),
+      supervisor(CommunityWeb.Endpoint, [])
       # Start your own worker by calling: Community.Worker.start_link(arg1, arg2, arg3)
       # worker(Community.Worker, [arg1, arg2, arg3]),
     ]
