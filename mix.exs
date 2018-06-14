@@ -44,7 +44,8 @@ defmodule Community.Mixfile do
       {:absinthe_ecto, "~> 0.1.0"},
       {:absinthe_plug, "~> 1.3.0"},
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 1.1"}
+      {:httpoison, "~> 1.1"},
+      {:redix, ">= 0.0.0"}
     ]
   end
 

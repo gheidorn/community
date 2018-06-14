@@ -1,3 +1,5 @@
 <div class="jumbotron">
   <h2>Hello Page, from Phoenix!</h2>
+  <%= @conn.params["card_id"] %>
+  <p><%= handler_info @conn %></p>
 </div>
