@@ -7,11 +7,6 @@ defmodule CommunityWeb.Router do
     plug(:fetch_flash)
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
-
-    plug(
-      Plug.Static,
-      only: ~w(css fonts images js favicon.ico robots.txt)
-    )
   end
 
   scope "/", CommunityWeb do
