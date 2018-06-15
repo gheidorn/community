@@ -1,12 +1,16 @@
 defmodule CommunityWeb.MagicInfo do
   def types() do
     %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/types")
-    Poison.decode!(body, keys: :atoms)
+    Poison.decode!(body)
   end
 
   def cards() do
-    %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/cards")
-    Poison.decode!(body, keys: :atoms)
+    %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/cards?pageSize=5")
+    cards = Poison.decode!(body)["cards"]
+
+    for card <- cards do
+      %MagicCard{multiverse_id: card["multiverseid"], name: card["name"], text: card["text"]}
+    end
   end
 
   def card(id) do
