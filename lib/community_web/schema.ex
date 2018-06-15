@@ -7,7 +7,13 @@ defmodule CommunityWeb.Schema do
   object :card do
     field(:multiverse_id, non_null(:integer))
     field(:name, non_null(:string))
+
+    field(:new_key, non_null(:string)) do
+      resolve(fn card, _, _ -> {:ok, new_key(card)} end)
+    end
+
     field(:text, non_null(:string))
+    field(:image_url, :string)
   end
 
   object :link do
@@ -16,7 +22,26 @@ defmodule CommunityWeb.Schema do
     field(:description, non_null(:string))
   end
 
+  # object :set_of_cards do
+  #   field(:set, :set)
+  #   field(:cards, :cards)
+  # end
+
+  # scalar :set do
+  #   parse fn input ->
+  #     {:ok, input}
+  #   end
+
+  #   serialize fn set ->
+
+  #   end
+  # end
+
   query do
+    field :info, :string do
+      {:ok, "my first GraphQL API"}
+    end
+
     # this is the query entry point to our app
     field :all_links, non_null(list_of(non_null(:link))) do
       resolve(&NewsResolver.all_links/3)
@@ -25,6 +50,9 @@ defmodule CommunityWeb.Schema do
     field :cards, non_null(list_of(non_null(:card))) do
       resolve(&MagicInfoResolver.cards/3)
     end
+
+    # field :card_link, list_of(:card_link) do
+    # end
   end
 
   mutation do
@@ -34,5 +62,10 @@ defmodule CommunityWeb.Schema do
 
       resolve(&NewsResolver.create_link/3)
     end
+  end
+
+  @doc "used to compute a field in the card object of this schema"
+  def new_key(card) do
+    Integer.to_string(card.multiverse_id) <> "::" <> card.name
   end
 end

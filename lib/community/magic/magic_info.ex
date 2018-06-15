@@ -1,4 +1,21 @@
 defmodule CommunityWeb.MagicInfo do
+  @moduledoc """
+  Acts as a client to the Magic The Gathering APIs at api.magicthegathering.io.
+
+  Functions typically return structs.
+
+  ## Examples
+
+      iex> CommunityWeb.MagicInfo.card(123)
+      %MagicCard{
+        image_url: "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=123&type=card",
+        multiverse_id: 123,
+        name: "Psychic Venom",
+        text: "Enchant land\nWhenever enchanted land becomes tapped, Psychic Venom deals 2 damage to that land's controller."
+      }     
+
+  """
+
   def types() do
     %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/types")
     Poison.decode!(body)
@@ -9,13 +26,53 @@ defmodule CommunityWeb.MagicInfo do
     cards = Poison.decode!(body)["cards"]
 
     for card <- cards do
-      %MagicCard{multiverse_id: card["multiverseid"], name: card["name"], text: card["text"]}
+      %MagicCard{
+        multiverse_id: card["multiverseid"],
+        name: card["name"],
+        text: card["text"],
+        image_url: card["imageUrl"]
+      }
     end
+  end
+
+  def cards_by_set(set) do
+    %{body: body} =
+      HTTPoison.get!("https://api.magicthegathering.io/v1/cards?set=#{set}&pageSize=5")
+
+    cards = Poison.decode!(body)["cards"]
+
+    for card <- cards do
+      %MagicCard{
+        multiverse_id: card["multiverseid"],
+        name: card["name"],
+        text: card["text"],
+        image_url: card["imageUrl"]
+      }
+    end
+  end
+
+  def set(set_code) do
+    %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/sets/#{set_code}")
+    set = Poison.decode!(body)["set"]
+
+    %MagicSet{
+      code: set["code"],
+      name: set["name"],
+      type: set["type"],
+      block: set["block"]
+    }
   end
 
   def card(id) do
     %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/cards/#{id}")
-    Poison.decode!(body)
+    card = Poison.decode!(body)["card"]
+
+    %MagicCard{
+      multiverse_id: card["multiverseid"],
+      name: card["name"],
+      text: card["text"],
+      image_url: card["imageUrl"]
+    }
   end
 
   def artist(card_id) do

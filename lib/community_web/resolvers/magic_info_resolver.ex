@@ -2,9 +2,18 @@ defmodule CommunityWeb.MagicInfoResolver do
   alias CommunityWeb.MagicInfo
 
   def cards(_root, _args, _info) do
-    cards = MagicInfo.cards()
+    {:ok, MagicInfo.cards()}
+  end
 
-    IO.inspect(cards)
-    {:ok, cards}
+  def set(_root, {:set_code, set_code}, _info) do
+    {:ok, MagicInfo.set(set_code)}
+  end
+
+  def set_of_cards(_root, {:set_code, set_code}, _info) do
+    {:ok,
+     %MagicSetOfCards{
+       set: MagicInfo.set(set_code),
+       cards: MagicInfo.cards()
+     }}
   end
 end
