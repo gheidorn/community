@@ -16,6 +16,14 @@ defmodule CommunityWeb.Schema do
     field(:image_url, :string)
   end
 
+  object :set do
+    field(:code, non_null(:string))
+    field(:name, non_null(:string))
+    field(:block, :string)
+    field(:type, non_null(:string))
+    field(:release_date, :string)
+  end
+
   object :link do
     field(:id, non_null(:id))
     field(:url, non_null(:string))
@@ -38,10 +46,6 @@ defmodule CommunityWeb.Schema do
   # end
 
   query do
-    field :info, :string do
-      {:ok, "my first GraphQL API"}
-    end
-
     # this is the query entry point to our app
     field :all_links, non_null(list_of(non_null(:link))) do
       resolve(&NewsResolver.all_links/3)
@@ -49,6 +53,11 @@ defmodule CommunityWeb.Schema do
 
     field :cards, non_null(list_of(non_null(:card))) do
       resolve(&MagicInfoResolver.cards/3)
+    end
+
+    field :set, non_null(:set) do
+      arg(:code, :string)
+      resolve(&MagicInfoResolver.set/3)
     end
 
     # field :card_link, list_of(:card_link) do

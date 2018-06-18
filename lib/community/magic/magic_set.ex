@@ -2,5 +2,6 @@ defmodule MagicSet do
   defstruct code: "",
             name: "",
             type: "",
-            block: ""
+            block: "",
+            release_date: ""
 end

@@ -51,15 +51,16 @@ defmodule CommunityWeb.MagicInfo do
     end
   end
 
-  def set(set_code) do
-    %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/sets/#{set_code}")
+  def set(%{code: code}) do
+    %{body: body} = HTTPoison.get!("https://api.magicthegathering.io/v1/sets/#{code}")
     set = Poison.decode!(body)["set"]
 
     %MagicSet{
       code: set["code"],
       name: set["name"],
       type: set["type"],
-      block: set["block"]
+      block: set["block"],
+      release_date: set["releaseDate"]
     }
   end
 
